@@ -94,4 +94,8 @@ app.use((err, req, res, next) => {
   //res.status(statusCode).send(message);
 });
 
+app.use((err) => {
+  console.log("ERROR");
+});
+
 // HI tihs is new Code for this
