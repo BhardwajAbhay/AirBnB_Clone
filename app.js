@@ -11,9 +11,13 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 const listing = require("./routes/listing.js");
 const review = require("./routes/review.js");
+const passport = require("passport");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -35,6 +39,9 @@ const sessionOption = {
 
 app.use(session(sessionOption));
 app.use(flash());
+
+// FOR THE AUTHENTICATION USING "PASSPORT"
+
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
