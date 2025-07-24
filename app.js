@@ -42,7 +42,6 @@ app.use(flash());
 
 // FOR THE AUTHENTICATION USING "PASSPORT"
 
-
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -91,6 +90,14 @@ app.listen(8080, () => {
 //Catch-all for unmatched routes
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  const { statusCode = 500, message = "Something went wrong!" } = err;
+  res.status(statusCode).render("error.ejs", { message });
+  //res.status(statusCode).send(message);
 });
 
 // Error handler
