@@ -12,7 +12,7 @@ const Review = require("./models/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const localStrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 const listing = require("./routes/listing.js");
@@ -41,6 +41,12 @@ app.use(session(sessionOption));
 app.use(flash());
 
 // FOR THE AUTHENTICATION USING "PASSPORT"
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser()); // When User is connect with the Website (Serilize)
+passport.deserializeUser(User.deserializeUser()); // When user is logout from Website (Deserialize)
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -90,46 +96,6 @@ app.listen(8080, () => {
 //Catch-all for unmatched routes
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
 });
 
 // Error handler
