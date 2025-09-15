@@ -17,7 +17,6 @@ const User = require("./models/user.js");
 
 const listing = require("./routes/listing.js");
 const review = require("./routes/review.js");
-const passport = require("passport");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -45,8 +44,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser()); // When User is connect with the Website (Serilize)
-passport.deserializeUser(User.deserializeUser()); // When user is logout from Website (Deserialize)
+passport.serializeUser(User.serializeUser()); // When User is connect with the Website (Serilize) User in the session
+passport.deserializeUser(User.deserializeUser()); // When user is logout from Website (Deserialize) User logout from the session
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -97,33 +96,6 @@ app.get("/", (req, res) => {
 //   res.send("successful testing");
 // });
 
-// app.get("/testListing", async (req, res) => {
-//   let sampleListing = new Listing({
-//     title: "My New Villa",
-//     description: "By the beach",
-//     price: 1200,
-//     location: "Calangute, Goa",
-//     country: "India",
-//   });
-
-//   await sampleListing.save();
-//   console.log("sample was saved");
-//   res.send("successful testing");
-// });
-
-// app.get("/testListing", async (req, res) => {
-//   let sampleListing = new Listing({
-//     title: "My New Villa",
-//     description: "By the beach",
-//     price: 1200,
-//     location: "Calangute, Goa",
-//     country: "India",
-//   });
-
-//   await sampleListing.save();
-//   console.log("sample was saved");
-//   res.send("successful testing");
-// });
 app.use("/listings", listing);
 app.use("/listings/:id/reviews", review);
 
