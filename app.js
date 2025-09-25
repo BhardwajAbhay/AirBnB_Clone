@@ -116,24 +116,3 @@ app.use((err, req, res, next) => {
   //res.status(statusCode).send(message);
 });
 
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-}); // Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-  //res.status(statusCode).send(message);
-});
